@@ -23,6 +23,7 @@ services:
     - "mongodb://apibara:apibara@mongo:27017"
     environment:
       PYTHONUNBUFFERED: "1"
+      DNA_TOKEN: ${DNA_TOKEN}
     links:
     - mongo
 

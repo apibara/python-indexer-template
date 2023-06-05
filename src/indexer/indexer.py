@@ -36,7 +36,7 @@ class BriqIndexer(StarkNetIndexer):
                 EventFilter().with_from_address(briqs_address).with_keys([transfer_key])
             ),
             starting_cursor=starknet_cursor(10_000),
-            finality=DataFinality.DATA_STATUS_FINALIZED,
+            finality=DataFinality.DATA_STATUS_ACCEPTED,
         )
 
     async def handle_data(self, info: Info, data: Block):
@@ -59,11 +59,12 @@ class BriqIndexer(StarkNetIndexer):
         raise ValueError("data must be finalized")
 
 
-async def run_indexer(server_url=None, mongo_url=None, restart=None):
+async def run_indexer(server_url=None, mongo_url=None, restart=None, dna_token=None):
     runner = IndexerRunner(
         config=IndexerRunnerConfiguration(
             stream_url=server_url,
             storage_url=mongo_url,
+            token=dna_token,
         ),
         reset_state=restart,
     )
